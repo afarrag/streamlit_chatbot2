@@ -8,7 +8,7 @@ import streamlit as st
 import gdown
 import os
 if not os.path.exists('faiss_index'):
-  gdown.download_folder("1A8A9lhcUXUKRrtCe7rckMlQtgmfLZRQH")
+  gdown.download_folder(id="1A8A9lhcUXUKRrtCe7rckMlQtgmfLZRQH")
 # llm
 hf_model = "mistralai/Mistral-7B-Instruct-v0.3"
 llm = HuggingFaceEndpoint(repo_id=hf_model)
