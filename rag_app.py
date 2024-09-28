@@ -5,21 +5,24 @@ from langchain_core.prompts import PromptTemplate
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 import streamlit as st
-
+import gdown
+import os
+if not os.path.exists('faiss_index'):
+  gdown.download_folder("1A8A9lhcUXUKRrtCe7rckMlQtgmfLZRQH")
 # llm
 hf_model = "mistralai/Mistral-7B-Instruct-v0.3"
 llm = HuggingFaceEndpoint(repo_id=hf_model)
 
 # embeddings
 embedding_model = "sentence-transformers/all-MiniLM-l6-v2"
-embeddings_folder = "/content/"
+embeddings_folder = "./"
 
 embeddings = HuggingFaceEmbeddings(model_name=embedding_model,
                                    cache_folder=embeddings_folder)
 
 # load Vector Database
 # allow_dangerous_deserialization is needed. Pickle files can be modified to deliver a malicious payload that results in execution of arbitrary code on your machine
-vector_db = FAISS.load_local("/content/faiss_index", embeddings, allow_dangerous_deserialization=True)
+vector_db = FAISS.load_local("./faiss_index", embeddings, allow_dangerous_deserialization=True)
 
 # retriever
 retriever = vector_db.as_retriever(search_kwargs={"k": 2})
